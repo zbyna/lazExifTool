@@ -227,6 +227,7 @@ begin
   if Tool.Error then
     exit;
   Cmd := TStringList.Create;
+  Cmd.Add('-v1');
   Cmd.Add('-ThumbnailImage');
   Cmd.Add('-b');
   Cmd.Add('-fast');
@@ -265,7 +266,8 @@ begin
   if Tool.Error then
     exit;
   Cmd := TStringList.Create;
-  Cmd.Add('-xmp-dc:subject');
+  Cmd.Add('-j');  // json output
+  Cmd.Add('-xmp:all');
   Cmd.Add('-iptc:keywords');
   Cmd.Add('-fast');
   Cmd.Add('-fast2');
