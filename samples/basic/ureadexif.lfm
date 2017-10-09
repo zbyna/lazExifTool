@@ -1,13 +1,16 @@
 object Form1: TForm1
   Left = 100
-  Height = 332
+  Height = 472
   Top = 180
-  Width = 470
+  Width = 703
   ActiveControl = ValueListEditor1
   Caption = 'Form1'
-  ClientHeight = 332
-  ClientWidth = 470
+  ClientHeight = 472
+  ClientWidth = 703
   DesignTimePPI = 134
+  OnClose = FormClose
+  OnCreate = FormCreate
+  LCLVersion = '1.7'
   Visible = False
   object Image1: TImage
     AnchorSideTop.Control = ToolBar
@@ -16,8 +19,8 @@ object Form1: TForm1
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 176
-    Height = 306
+    Left = 409
+    Height = 446
     Top = 26
     Width = 294
     Anchors = [akTop, akRight, akBottom]
@@ -26,7 +29,7 @@ object Form1: TForm1
     Left = 0
     Height = 26
     Top = 0
-    Width = 470
+    Width = 703
     Caption = 'ToolBar'
     Images = ImageList
     ParentFont = False
@@ -37,14 +40,14 @@ object Form1: TForm1
       Action = FileExit
     end
     object ToolButton2: TToolButton
-      Left = 24
-      Height = 22
+      Left = 33
+      Height = 31
       Top = 2
       Caption = 'ToolButton2'
       Style = tbsSeparator
     end
     object ToolButton3: TToolButton
-      Left = 32
+      Left = 41
       Top = 2
       Action = FileOpen
     end
@@ -57,9 +60,9 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 0
-    Height = 306
+    Height = 446
     Top = 26
-    Width = 176
+    Width = 409
     Anchors = [akTop, akLeft, akRight, akBottom]
     FixedCols = 0
     ParentFont = False
@@ -70,8 +73,16 @@ object Form1: TForm1
     )
     ColWidths = (
       64
-      108
+      317
     )
+  end
+  object memLog: TMemo
+    Left = 11
+    Height = 200
+    Top = 258
+    Width = 382
+    ScrollBars = ssAutoBoth
+    TabOrder = 2
   end
   object ActionList: TActionList
     Images = ImageList
@@ -95,7 +106,7 @@ object Form1: TForm1
     end
   end
   object ImageList: TImageList
-    Left = 373
+    Left = 344
     Top = 191
     Bitmap = {
       4C69030000001000000010000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
