@@ -32,7 +32,7 @@ type
   strict private
     Tool: TExifTool;
     Event: TEvent;
-    Queue: TQueue;
+    myQueue: TQueue;
   public
     constructor Create(ATool: TExifTool);
     destructor Destroy; override;
@@ -81,7 +81,7 @@ type
 constructor TExifQueue.Create(ATool: TExifTool);
 begin
   Event := TEvent.Create(nil, False, False, '');
-  Queue := TQueue.Create;
+  myQueue := TQueue.Create;
   Tool := ATool;
   inherited Create(False);
   FreeOnTerminate := True;
@@ -90,7 +90,7 @@ end;
 destructor TExifQueue.Destroy;
 begin
   Event.Free;
-  Queue.Free;
+  myQueue.Free;
   inherited Destroy;
 end;
 
@@ -99,9 +99,9 @@ var
   Item: TExifQueuedJob;
 begin
   repeat
-    if Queue.Count = 0 then
+    if myQueue.Count = 0 then
       Event.WaitFor(INFINITE);
-    Item := TExifQueuedJob(Queue.Pop);
+    Item := TExifQueuedJob(myQueue.Pop);
     if Item <> nil then begin
       Item.Execute;
       Item.Free;
@@ -122,7 +122,7 @@ end;
 
 procedure TExifQueue.Enqueue(Job: TExifQueuedJob);
 begin
-  Queue.Push(Job);
+  myQueue.Push(Job);
   WakeUp;
 end;
 
