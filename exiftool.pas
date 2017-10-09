@@ -173,10 +173,7 @@ begin
   B[0] := #0; // make compiler happy
   if FError then
     exit;
-  for S in Command do begin
-    S := S + LineEnding;
-    Input.Write(S[1], Length(S));
-  end;
+  Input.Write(Command.Text[1], Length(Command.Text));
   S := '-execute' + LineEnding;
   Input.Write(S[1], Length(S));
   Prompt := '{ready}' + LineEnding;
@@ -260,7 +257,7 @@ var
   Cmd: TStringList;
   Lines: TStringList;
   Tags: TStringList;
-  Line: UTF8String;
+  Line,pomLine: UTF8String;
   Tag: UTF8String;
   P: Integer;
   Data: AnsiString;
@@ -282,17 +279,18 @@ begin
   Lines.Text := Data;
   if Lines.Count > 0 then begin
     for Line in Lines do begin
-      P := Pos(':', Line);
+      pomLine:=Line;
+      P := Pos(':', pomLine);
       if P > 0 then begin
-        Line := RightStr(Line, Length(Line)- P);
+        pomLine := RightStr(pomLine, Length(pomLine)- P);
         repeat
-          P := Pos(',', Line);
+          P := Pos(',', pomLine);
           if P > 0 then begin
-            Tag := Trim(LeftStr(Line, P-1));
-            Line := RightStr(Line, Length(Line) - P);
+            Tag := Trim(LeftStr(pomLine, P-1));
+            pomLine := RightStr(pomLine, Length(pomLine) - P);
           end
           else begin
-            Tag := Trim(Line);
+            Tag := Trim(pomLine);
           end;
           if Tags.IndexOf(Tag) = -1 then begin
             Tags.Add(Tag);
