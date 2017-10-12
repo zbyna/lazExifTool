@@ -227,9 +227,9 @@ begin
   if Tool.Error then
     exit;
   Cmd := TStringList.Create;
-  Cmd.Add('-v1');
-  Cmd.Add('-ThumbnailImage');
   Cmd.Add('-b');
+  //Cmd.Add('-m');
+  Cmd.Add('-ThumbnailImage');
   Cmd.Add('-fast');
   Cmd.Add('-fast2');
   Cmd.Add(FileName);

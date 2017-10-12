@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
-  ActnList, ExtCtrls, ComCtrls, ValEdit, StdActns, StdCtrls,exiftool;
+  ActnList, ExtCtrls, ComCtrls, ValEdit, StdActns, StdCtrls,exiftool,JPEGLib;
 
 type
 
@@ -100,11 +100,24 @@ end;
 
 
 procedure TForm1.Thumbnaildata(Data: PtrInt);
+var
+  pomMS:TMemoryStream;
+  jpeg: TJPEGImage;
+  pomData:TStringObject;
 begin
-  memLog.Append('GetThumbnail-------------------------------------');
-  memLog.append(TStringObject(Data).S);
-  memLog.Append('-------------------------------------------------');
-  TStringObject(Data).Destroy;  // to je docela síla :-)
+  pomData:=TStringObject(Data);  // to je docela síla :-)
+  memLog.Append('GetThumbnail --------');
+  memLog.append('String length: '+inttostr(pomData.S.Length));
+  pomMS:=TMemoryStream.Create;
+  pomMS.Write(pomData.S[1],pomData.S.Length);
+  memLog.append('Stream size: '+inttostr(pomMS.Size));
+  pomMS.Position := 0;
+  jpeg := TJpegImage.Create;
+  jpeg.LoadFromStream(pomMS);
+  image1.Picture.Assign(jpeg);
+  jpeg.Destroy;
+  pomMS.Destroy;
+  pomData.Destroy;
 end;
 
 procedure TForm1.tagsData(Data: PtrInt);
