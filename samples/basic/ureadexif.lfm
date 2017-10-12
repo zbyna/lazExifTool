@@ -1,35 +1,22 @@
 object Form1: TForm1
   Left = 100
-  Height = 472
+  Height = 511
   Top = 180
-  Width = 703
+  Width = 678
   ActiveControl = ValueListEditor1
   Caption = 'Form1'
-  ClientHeight = 472
-  ClientWidth = 703
+  ClientHeight = 511
+  ClientWidth = 678
   DesignTimePPI = 134
   OnClose = FormClose
   OnCreate = FormCreate
   LCLVersion = '1.7'
   Visible = False
-  object Image1: TImage
-    AnchorSideTop.Control = ToolBar
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = Owner
-    AnchorSideBottom.Side = asrBottom
-    Left = 409
-    Height = 446
-    Top = 26
-    Width = 294
-    Anchors = [akTop, akRight, akBottom]
-  end
   object ToolBar: TToolBar
     Left = 0
     Height = 26
     Top = 0
-    Width = 703
+    Width = 678
     Caption = 'ToolBar'
     Images = ImageList
     ParentFont = False
@@ -56,14 +43,17 @@ object Form1: TForm1
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = ToolBar
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Image1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 0
-    Height = 446
-    Top = 26
-    Width = 409
+    Left = 10
+    Height = 465
+    Top = 36
+    Width = 366
     Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
+    BorderSpacing.Right = 10
+    BorderSpacing.Bottom = 10
     FixedCols = 0
     ParentFont = False
     RowCount = 2
@@ -73,16 +63,64 @@ object Form1: TForm1
     )
     ColWidths = (
       64
-      317
+      274
     )
   end
   object memLog: TMemo
-    Left = 11
-    Height = 200
-    Top = 258
-    Width = 382
+    AnchorSideLeft.Control = ValueListEditor1
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Image1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 386
+    Height = 225
+    Top = 276
+    Width = 282
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
+    BorderSpacing.Right = 10
+    BorderSpacing.Bottom = 10
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -19
+    Font.Name = 'Inconsolata'
+    Font.Pitch = fpFixed
+    Font.Quality = fqDraft
+    ParentFont = False
     ScrollBars = ssAutoBoth
     TabOrder = 2
+  end
+  object Image1: TImage
+    AnchorSideLeft.Control = ValueListEditor1
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = ToolBar
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = memLog
+    Left = 386
+    Height = 230
+    Top = 36
+    Width = 282
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 10
+    BorderSpacing.Right = 10
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = Image1
+    AnchorSideTop.Control = Image1
+    AnchorSideRight.Control = Image1
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Image1
+    AnchorSideBottom.Side = asrBottom
+    Left = 386
+    Height = 230
+    Top = 36
+    Width = 288
+    Anchors = [akTop, akLeft, akBottom]
   end
   object ActionList: TActionList
     Images = ImageList

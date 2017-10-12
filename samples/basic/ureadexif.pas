@@ -13,6 +13,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    Bevel1: TBevel;
     instanceTexifTool: TExifTool;
     ActionList: TActionList;
     FileExit: TFileExit;
@@ -29,8 +30,6 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
   private
-
-
     procedure thumbnailData(Data: PtrInt);
     procedure tagsData(Data: PtrInt);
   public
@@ -55,8 +54,6 @@ begin
   MyFileName:= FileOpen.Dialog.FileName;
   if FileExists(MyFileName) then begin
     ValueListEditor1.Clear;
-    Image1.Proportional:= True;
-    Image1.Stretch:= True;
     Image1.Picture.LoadFromFile(MyFileName);
     try
       instanceTexifTool.GetThumbnail(MyFileName, @thumbnailData);
@@ -66,7 +63,9 @@ begin
       myArgs.DelimitedText:=pomS;
       ShowMessage(myArgs[1]);  // it is needed to wait until previous jobs done
                                // or use queue
+      memLog.Append('Custom command ------');
       memLog.Append(instanceTexifTool.RunCommand(myArgs));
+      memLog.Append('---------------------');
       //if ImgData.ProcessFile(MyFileName) then begin
       //  if ImgData.HasEXIF then begin
       //    ValueListEditor1.InsertRow('Camera Make',
@@ -95,6 +94,9 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   instanceTexifTool:=TExifTool.Create(nil);
+  Image1.Proportional:= True;
+  Image1.Stretch:= True;
+  Image1.AutoSize:=True;
 end;
 
 
@@ -118,16 +120,17 @@ begin
   jpeg.Destroy;
   pomMS.Destroy;
   pomData.Destroy;
+  memLog.Append('---------------------');
 end;
 
 procedure TForm1.tagsData(Data: PtrInt);
 var
  pomStringList :Tstringlist;
 begin
-  memLog.Append('GetTags----------------------------------');
+  memLog.Append('GetTags -------------');
   pomStringList:=TStringList(Data);
   memLog.append(pomStringList.Text);
-  memLog.Append('----------------------------------------------');
+  memLog.Append('---------------------');
   TStringList(Data).Destroy;  // to je docela síla :-)
 end;
 
