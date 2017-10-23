@@ -56,6 +56,7 @@ type
     procedure Enqueue(Job: TExifQueuedJob);
     procedure GetThumbnail(FileName: UTF8String; CB: TDataEvent);
     procedure GetTags(FileName: UTF8String; CB: TDataEvent);
+    procedure RunCommandasync(FileName: UTF8String; CB: TDataEvent; Command:String);
     property Error: Boolean read FError;
   end;
 
@@ -75,6 +76,41 @@ type
     constructor Create(ATool: TExifTool; CB: TDataEvent; AFileNama: UTF8String);
     procedure Execute; override;
   end;
+
+  { TExifRunCommandasyncJob }
+
+  TExifRunCommandasyncJob = class(TExifQueuedJob)
+    public
+      customCommand:String;
+      constructor Create(ATool: TExifTool; CB: TDataEvent; AFileNama: UTF8String;
+                        Cmd: String);
+      procedure Execute; override;
+  end;
+
+  constructor TExifRunCommandasyncJob.Create(ATool: TExifTool; CB: TDataEvent;
+                                           AFileNama: UTF8String; Cmd: String);
+  begin
+    inherited Create(ATool, CB);
+    FileName := AFileNama;
+    customCommand:=cmd;
+  end;
+
+  procedure TExifRunCommandasyncJob.Execute;
+  var
+    JobResult: TStringObject;
+    myArgs:TStringList;
+  begin
+    if Tool.Error then
+      exit;
+    myArgs:=TStringList.Create;
+    myArgs.DelimitedText:=customCommand;
+    myArgs.Add(FileName);
+    JobResult := TStringObject.Create;
+    JobResult.S := Tool.RunCommand(myArgs);
+    myArgs.Free;
+    Application.QueueAsyncCall(Callback, LongInt(JobResult));
+  end;
+
 
 { TExifQueue }
 
@@ -209,6 +245,11 @@ end;
 procedure TExifTool.GetTags(FileName: UTF8String; CB: TDataEvent);
 begin
   Enqueue(TExifKeywordsParseJob.Create(Self, CB, FileName));
+end;
+
+procedure TExifTool.RunCommandasync(FileName: UTF8String; CB: TDataEvent; Command: String);
+begin
+  Enqueue(TExifRunCommandasyncJob.Create(Self, CB, FileName, Command));
 end;
 
 { TExifGetThumbnailJob }
