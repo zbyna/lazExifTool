@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
-  ActnList, ExtCtrls, ComCtrls, ValEdit, StdActns, StdCtrls,exiftool,JPEGLib;
+  ActnList, ExtCtrls, ComCtrls, ValEdit, StdActns, StdCtrls,exiftool,
+  fpjson,jsonparser;
 
 type
 
@@ -32,6 +33,7 @@ type
   private
     procedure thumbnailData(Data: PtrInt);
     procedure tagsData(Data: PtrInt);
+    procedure asyncCommandData(Data: PtrInt);
   public
 
   end;
@@ -59,27 +61,9 @@ begin
       instanceTexifTool.GetThumbnail(MyFileName, @thumbnailData);
       instanceTexifTool.GetTags(MyFileName, @tagsData);
       myArgs:=TStringList.Create;
-      pomS:='-xmp:all -j '+MyFileName;
-      myArgs.DelimitedText:=pomS;
-      ShowMessage(myArgs[1]);  // it is needed to wait until previous jobs done
-                               // or use queue
-      memLog.Append('Custom command ------');
-      memLog.Append(instanceTexifTool.RunCommand(myArgs));
-      memLog.Append('---------------------');
-      //if ImgData.ProcessFile(MyFileName) then begin
-      //  if ImgData.HasEXIF then begin
-      //    ValueListEditor1.InsertRow('Camera Make',
-      //      ImgData.ExifObj.CameraMake,True);
-      //    ValueListEditor1.InsertRow('Camera Modell',
-      //      ImgData.ExifObj.CameraModel,True);
-      //    ValueListEditor1.InsertRow('Picture DateTime',
-      //      FormatDateTime(ISO_DATETIME_FORMAT, ImgData.ExifObj.GetImgDateTime),True);
-      //  end
-      //  else
-      //    ValueListEditor1.InsertRow('No EXIF','No Data',True);
-      //end
-      //else
-      //  ValueListEditor1.InsertRow('No EXIF','Processdata',True);
+      // async custom command line
+      pomS:='-xmp:all -j ';  // -Orientation -S
+      instanceTexifTool.RunCommandAsync(MyFileName,@asyncCommandData,pomS);
     finally
       myArgs.Free;
     end;
@@ -101,7 +85,7 @@ end;
 
 
 
-procedure TForm1.Thumbnaildata(Data: PtrInt);
+procedure TForm1.thumbnailData(Data: PtrInt);
 var
   pomMS:TMemoryStream;
   jpeg: TJPEGImage;
@@ -132,6 +116,30 @@ begin
   memLog.append(pomStringList.Text);
   memLog.Append('---------------------');
   TStringList(Data).Destroy;  // to je docela síla :-)
+end;
+
+procedure TForm1.asyncCommandData(Data: PtrInt);
+var
+ pomStringObject :TStringObject;
+ jData : TJSONData;
+ jObject : TJSONObject;
+ pomS, pomS2:String;
+ i: Integer;
+begin
+  memLog.Append('Get AsyncCommandData');
+  pomStringObject:=TStringObject(Data);
+  pomS:=pomStringObject.S;
+  memLog.append(pomS);
+  memLog.Append('---------------------');
+  jData := GetJSON(pomS);
+  jObject:=TJSONObject(TJSONArray(jData).Items[0]);
+  for i:=0 to jObject.Count-1 do
+    begin
+      pomS2:=jObject.Names[i];
+      ValueListEditor1.InsertRow(pomS2,jObject.Elements[pomS2].AsString,True);
+    end;
+  jData.Free;
+  pomStringObject.Free;
 end;
 
 end.

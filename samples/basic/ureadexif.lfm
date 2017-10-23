@@ -2,11 +2,11 @@ object Form1: TForm1
   Left = 100
   Height = 511
   Top = 180
-  Width = 678
+  Width = 843
   ActiveControl = ValueListEditor1
   Caption = 'Form1'
   ClientHeight = 511
-  ClientWidth = 678
+  ClientWidth = 843
   DesignTimePPI = 134
   OnClose = FormClose
   OnCreate = FormCreate
@@ -16,7 +16,7 @@ object Form1: TForm1
     Left = 0
     Height = 26
     Top = 0
-    Width = 678
+    Width = 843
     Caption = 'ToolBar'
     Images = ImageList
     ParentFont = False
@@ -48,8 +48,8 @@ object Form1: TForm1
     Left = 10
     Height = 465
     Top = 36
-    Width = 366
-    Anchors = [akTop, akLeft, akRight, akBottom]
+    Width = 455
+    Anchors = [akTop, akLeft, akBottom]
     BorderSpacing.Left = 10
     BorderSpacing.Top = 10
     BorderSpacing.Right = 10
@@ -58,12 +58,13 @@ object Form1: TForm1
     ParentFont = False
     RowCount = 2
     TabOrder = 1
+    DisplayOptions = [doColumnTitles, doAutoColResize]
     Strings.Strings = (
       ''
     )
     ColWidths = (
-      64
-      274
+      213
+      214
     )
   end
   object memLog: TMemo
@@ -75,10 +76,10 @@ object Form1: TForm1
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 386
+    Left = 475
     Height = 225
     Top = 276
-    Width = 282
+    Width = 358
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 10
     BorderSpacing.Top = 10
@@ -101,10 +102,10 @@ object Form1: TForm1
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = memLog
-    Left = 386
+    Left = 475
     Height = 230
     Top = 36
-    Width = 282
+    Width = 358
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 10
     BorderSpacing.Right = 10
@@ -116,7 +117,7 @@ object Form1: TForm1
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Image1
     AnchorSideBottom.Side = asrBottom
-    Left = 386
+    Left = 475
     Height = 230
     Top = 36
     Width = 288
